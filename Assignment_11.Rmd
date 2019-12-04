@@ -18,10 +18,32 @@ State_Employee_Payroll_Data_Calendar_Year_2015_through_Present <- read_delim("St
 
 ```{r}
 df <- State_Employee_Payroll_Data_Calendar_Year_2015_through_Present
+View(df)
 ```
 
 
 ```{r}
 barplot(table(df$`Pyrl Fiscal Yr`))
 ```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+
+
+
+
 
