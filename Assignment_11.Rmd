@@ -1,0 +1,27 @@
+---
+title: "Assignment_11"
+output: html_document
+---
+```{r}
+#download.file("https://sdsu.box.com/shared/static/neaac6yoqx9e9x4j8391lzozzy1949p7.zip", destfile = "salary.zip")
+
+#system("unzip salary.zip")
+
+```
+
+```{r}
+
+library(readr)
+State_Employee_Payroll_Data_Calendar_Year_2015_through_Present <- read_delim("State_Employee_Payroll_Data_Calendar_Year_2015_through_Present.tsv", 
+    "\t", escape_double = FALSE, trim_ws = TRUE)
+```
+
+```{r}
+df <- State_Employee_Payroll_Data_Calendar_Year_2015_through_Present
+```
+
+
+```{r}
+barplot(table(df$`Pyrl Fiscal Yr`))
+```
+
