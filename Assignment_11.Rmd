@@ -18,32 +18,63 @@ State_Employee_Payroll_Data_Calendar_Year_2015_through_Present <- read_delim("St
 
 ```{r}
 df <- State_Employee_Payroll_Data_Calendar_Year_2015_through_Present
-View(df)
 ```
 
 
 ```{r}
-barplot(table(df$`Pyrl Fiscal Yr`))
+df2 <- df[,c(1,2,13,14,18,24,25,29,30,31)]
+df3 <- subset(df2, df2$`Full/Part`=="F" & df2$Sex == "M" | df2$`Full/Part`=="F" & df2$Sex == "F")
+#View(df3)
 ```
 
 ```{r}
+library(dplyr)
+library(ggplot2)
+ace <- df3 %>% group_by(`Calendar Year`) %>% summarise(mean = mean(`Bi-Weekly Comp Rate`))
 
+
+ace %>%
+  ggplot(aes(`Calendar Year`, mean)) + coord_flip() + geom_point()
+```
+
+
+```{r}
+race <- df3 %>% group_by(`Ethnic Grp`) %>%  summarise(mean = mean(`Bi-Weekly Comp Rate`))
+
+
+race %>%
+  ggplot(aes(`Ethnic Grp`, mean)) + coord_flip() + geom_point()
+```
+
+
+```{r}
+race <- df3 %>% group_by(`Ethnic Grp`,`Calendar Year`) %>%  summarise(mean = mean(`Bi-Weekly Comp Rate`))
+
+race %>%
+ggplot(aes(x=`Calendar Year`, y=mean, fill=`Ethnic Grp`)) +
+geom_bar(stat="identity", position=position_dodge())
 ```
 
 ```{r}
+gender <- df3 %>% group_by(`Sex`,`Calendar Year`) %>%  summarise(mean = mean(`Bi-Weekly Comp Rate`))
 
+gender %>%
+ggplot(aes(x=`Calendar Year`, y=mean, fill=`Sex`)) +
+geom_bar(stat="identity", position=position_dodge())
 ```
 
 ```{r}
-
+df3$age_cut <- cut(df3$Age, 
+                       breaks = c(-Inf, 30, 40, 50, 60, 70, Inf), 
+                       labels = c("0 to 30", "30 to 40", "40 to 50", "50 to 60", "60 to 70", "70+"),
+                       right = FALSE)
 ```
 
 ```{r}
+gender <- df3 %>% group_by(`age_cut`, `Sex`) %>%  summarise(mean = mean(`Bi-Weekly Comp Rate`))
 
+gender %>%
+ggplot(aes(x=`age_cut`, y=mean, fill=`Sex`)) +
+geom_bar(stat="identity", position=position_dodge())
 ```
-
-
-
-
-
 
